@@ -1,0 +1,111 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% load tailwind_filters %}
+
+{% block appcontent %}
+  <div class="p-4">
+    <h1 class="font-bold text-2xl">Perfil de {{ request.user.username }}</h1>
+
+    <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {% comment %}Cajas Resumen Dashboard{% endcomment %}
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Plásticos Reciclados</h3>
+          </div>
+          <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+            14.6%<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Cajas Reciclados</h3>
+          </div>
+          <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+            32.9%<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Vidrios Reciclados</h3>
+          </div>
+          <div class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
+            -2.7%<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% comment %}Profile{% endcomment %}
+    <div class="mt-10">
+      <h2 class="text-2xl font-bold">Mi registro de reciclaje</h2>
+      <p class="text-sm opacity-70 mb-4">Para generar ganacias deberas darle al icono del dolar para ver las ofertas que las recicladoras ofrecen por KG de material</p>
+      <div class="flex flex-col items-center">
+        <!-- Simple Table Component -->
+        <div class="w-full rounded-lg border border-stone-200">
+          <table class="w-full">
+            <thead class="border-b border-stone-200 bg-stone-100 text-sm font-medium text-stone-600">
+              <tr>
+                <th class="px-2.5 py-2 text-start font-medium">Nombre</th>
+                <th class="px-2.5 py-2 text-start font-medium">Material</th>
+                <th class="px-2.5 py-2 text-start font-medium">Kg recolectado</th>
+                <th class="px-2.5 py-2 text-start font-medium"></th>
+              </tr>
+            </thead>
+            {% for data in recyclingData %}
+              <tbody class="group text-sm text-stone-800">
+                <tr class="border-b border-stone-200 last:border-0">
+                  {% if data.collector_name %}
+                    <td class="p-3">{{ data.collector_name }}</td>
+                  {% else %}
+                    <td class="p-3">{{ request.user.username }}</td>
+                  {% endif %}
+                  <td class="p-3">{{ data.material }}</td>
+                  <td class="p-3">{{ data.density }} kg</td>
+                  <td class="p-3 inline-flex gap-2">
+                    <a href="#" class=" bg-orange-200 p-2 rounded-md">
+                      <img class="w-4 h-4" src="{% static 'dolar.png' %}" alt="">
+                    </a>
+                    <a href="#" class=" bg-green-200 p-2 rounded-md">
+                      <img class="w-4 h-4" src="{% static 'lapiz.png' %}" alt="">
+                    </a>
+                    <a href="#" class=" bg-red-200 p-2 rounded-md">
+                      <img class="w-4 h-4" src="{% static 'borrar.png' %}" alt="">
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="font-bold tex-bold text-2xl mb-4">Cuenta</h2>
+      <div class="flex w-full justify-center">
+        <img class="rounded-full object-cover h-40 w-40" src="{{ request.user.profile.photo.url }}" alt="user-profile" />
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="w-full bg-black text-white p-4 rounded-md mt-4">Guardar</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
