@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import registerView, loginView, DashboardView, logoutApp, userProfile, RecycleView, deleteRecyclingData, editRecyclingData, RecycleCenterView
+from .views import registerView, loginView, DashboardView, logoutApp, userProfile, RecycleView, deleteRecyclingData, editRecyclingData, RecycleCenterView, claimMaterial 
 
 
 app_name = 'recycleapp'
@@ -13,6 +13,7 @@ urlpatterns = [
     path('recycle-view/', RecycleView.as_view(), name='recycle-view'),
     path('delete-recycling-data/<int:pk>/', deleteRecyclingData, name='delete-recycling-data'),
     path('edit-recycling-data/<int:pk>/', editRecyclingData, name='edit-recycling-data'),
-    path('recycle-center/', RecycleCenterView.as_view(), name="recycle-center" )
+    path('recycle-center/', RecycleCenterView.as_view(), name="recycle-center"),
+    path("claim/<int:center_id>/", claimMaterial, name="claim_material"),
 
 ]

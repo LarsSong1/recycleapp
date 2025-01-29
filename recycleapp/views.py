@@ -218,23 +218,37 @@ class RecycleCenterView(View):
             
             for data in recycling_data:
                 if data.density:  # Asegurar que la densidad está calculada
-                    material_price = None
+                    
                     
                     if data.material == "Plástico":
-                        material_price = data.density * center.plastic_price_per_kg
-                    elif data.material == "Vidrio":
-                        material_price = data.density * center.glass_price_per_kg
-                    elif data.material == "Cartón":
-                        material_price = data.density * center.cardboard_price_per_kg
+                        material_price = round(float(data.density) * center.plastic_price_per_kg, 2)
+                        
+                       
                     
-                    if material_price is not None:
+                    elif data.material == "Vidrio":
+                       
+                        material_price = round(float(data.density) * center.glass_price_per_kg, 2)
+                    
+                    
+                    elif data.material == "Cartón":
+                      
+                        material_price = round(float(data.density) * center.cardboard_price_per_kg, 2)
+                  
+                    
+
+
+                    
+                    if material_price > 0:
                         center_data["materials"].append({
                             "material": data.material,
                             "density": round(data.density, 2),
-                            "price": round(material_price, 2)
+                            "price": material_price,
+                            "id": data.id, 
                         })
+
             
             recycling_results.append(center_data)
+            
 
         context = {
             "recycling_results": recycling_results
@@ -272,34 +286,57 @@ class addReciclingCenter(View):
 
 
 
-
+# Por Revisar
 @login_required
-def claim_material(request, material_id, center_id):
-    """ Procesa el reclamo de un material y actualiza las ganancias del usuario. """
-    material = get_object_or_404(RecyclingData, id=material_id, user=request.user)
+def claimMaterial(request, center_id):
+    """ Procesa el reclamo de múltiples materiales y actualiza las ganancias del usuario. """
     center = get_object_or_404(RecyclingCenter, id=center_id)
 
-    if material.claimed:
-        messages.error(request, "Este material ya ha sido reclamado.")
-        return redirect('recycling_centers')  # Ajusta esto según tu URL de lista de centros
+    if request.method == 'POST':
+        # Obtener todos los materiales seleccionados
+        all_materials = RecyclingData.objects.filter(user=request.user, claimed=False)
+        print("Todos los materiales del usuario:")
+        for material in all_materials:
+            print(f"Material: {material.material}, Densidad: {material.density}, Reclamado: {material.claimed}")
 
-    # Obtener la ganancia en base a la densidad
-    total_money = center.get_price_for_material(material.material, material.density)
 
-    # Actualizar las ganancias del usuario
-    if material.material == "Plástico":
-        material.moneyPlastic += total_money
-    elif material.material == "Vidrio":
-        material.moneyGlass += total_money
-    elif material.material == "Cartón":
-        material.money_cardboard += total_money
 
-    # Marcar como reclamado
-    material.claimed = True
-    material.save()
+        if not all_materials:
+            messages.error(request, "No hay materiales seleccionados o ya reclamados.")
+            return redirect('recycleapp:recycle-center')  # Redirige si no se seleccionaron materiales
 
-    messages.success(request, f"Material reclamado con éxito. Ganaste ${total_money:.2f}")
-    return redirect('recycling_centers')  # Redirige de nuevo a la lista de centros
+        total_money = 0
 
+        # Procesa cada material seleccionado
+        for material in all_materials:
+            print(f"{material.material} - Densidad: {material.density} - Reclamado: {material.claimed}")
+            material_price = center.get_price_for_material(material.material, material.density)
+            total_money += material_price
+
+            # Actualizar las ganancias del usuario en base al tipo de material
+            if material.material == "Plástico":
+                print(f"Antes: moneyPlastic = {material.moneyPlastic}")
+                material.moneyPlastic += material_price
+                print(f"Después: moneyPlastic = {material.moneyPlastic}")
+
+            elif material.material == "Vidrio":
+                print(f"Antes: moneyGlass = {material.moneyGlass}")
+                material.moneyGlass += material_price
+                print(f"Después: moneyGlass = {material.moneyGlass}")
+
+            elif material.material == "Cartón":
+                print(f"Antes: moneyCardboard = {material.moneyCardboard}")
+                material.moneyCardboard += material_price
+                print(f"Después: moneyCardboard = {material.moneyCardboard}")
+
+            # Marcar como reclamado
+            material.claimed = True
+            material.save()
+
+        messages.success(request, f"¡Has reclamado los materiales! Ganaste ${total_money:.2f}.")
+        return redirect('recycleapp:profile', pk=request.user.pk)  # Redirige después de reclamar todos los materiales
+    else:
+        # Redirige si no es un método POST
+        return redirect('recycleapp:recycle-center')
 
 # -------------------------------------------------------------
