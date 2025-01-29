@@ -1,0 +1,82 @@
+{% extends 'dashboard.html' %}
+{% load tailwind_filters %}
+{% load static %}
+
+{% block appcontent %}
+  <div class="p-4">
+    <h1 class="font-bold text-2xl mb-4">Centros de reciclaje</h1>
+    <div>
+      {% for center_data in recycling_results %}
+        <div class="shadow-lg p-4">
+          <div class="flex justify-between">
+            <h3 class="font-bold text-xl">{{ center_data.center.name }}</h3>
+            <a href="#" class="flex gap-2">
+              <p class="font-bold">Ver en Maps</p>
+              <img class="w-6 h-6" src="{% static 'maps.png' %}" alt="" />
+            </a>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="font-bold">
+              Ubicación: <span class="font-normal">{{ center_data.center.address }}</span>
+            </p>
+
+            {% comment %}Reclamar{% endcomment %}
+
+            {% if not material.claimed %}
+              <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="bg-green-700 text-white px-2 py-1 rounded mt-2">Reclamar</button>
+              </form>
+            {% else %}
+              <button class="bg-gray-500 text-white px-2 py-1 rounded mt-2" disabled>Reclamado</button>
+            {% endif %}
+
+            {% comment %} {% endcomment %}
+          </div>
+          <h5 class="text-xs font-bold">Ofrece por kg de Material:</h5>
+          <ul class="inline-flex gap-4">
+            <li class="text-xs font-bold">
+              Vidrio:
+              <span class="text-green-700">${{ center_data.center.glass_price_per_kg }}</span>
+            </li>
+            <li class="text-xs font-bold">
+              Cartón:
+              <span class="text-green-700">${{ center_data.center.cardboard_price_per_kg }}</span>
+            </li>
+            <li class="text-xs font-bold">
+              Plástico:
+              <span class="text-green-700">${{ center_data.center.plastic_price_per_kg }}</span>
+            </li>
+          </ul>
+          <h5>Tienes:</h5>
+          <p class="text-xs">Presiona para reclamar</p>
+          <div class="grid grid-cols-3 gap-4">
+            {% for material in center_data.materials %}
+              <ul class="flex flex-col mt-2">
+                {% if material.material == 'Plástico' %}
+                  <div class="flex flex-col justify-center items-center p-2 border-2 border-black rounded-md">
+                    <img class="w-8 h-8" src="{% static 'plastico.png' %}" alt="" />
+                    <p>Plástico: {{ material.density }} Kg</p>
+                    <p class="font-bold text-green-700">Ganancias: ${{ material.price }}</p>
+                  </div>
+                {% elif material.material == 'Cartón' %}
+                  <div class="flex flex-col justify-center items-center p-2 border-2 border-black rounded-md">
+                    <img class="w-8 h-8" src="{% static 'carton.png' %}" alt="" />
+                    <p>Cartón: {{ material.density }} Kg</p>
+                    <p class="font-bold text-green-700">Ganancias: ${{ material.price }}</p>
+                  </div>
+                {% elif material.material == 'Vidrio' %}
+                  <div class="flex flex-col justify-center items-center p-2 border-2 border-black rounded-md">
+                    <img class="w-8 h-8" src="{% static 'vidrio.png' %}" alt="" />
+                    <p>Vidrio: {{ material.density }} Kg</p>
+                    <p class="font-bold text-green-700">Ganancias: ${{ material.price }}</p>
+                  </div>
+                {% endif %}
+              </ul>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

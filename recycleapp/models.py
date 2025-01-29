@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 
 class MaterialChoices(models.TextChoices):
     PLASTIC = 'Plástico', 'Plástico'
@@ -24,6 +26,13 @@ class RecyclingData(models.Model):
     collector_name = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    claimed = models.BooleanField(default=False)
+    money = models.FloatField(default=0)
+    money_cardboard = models.FloatField(default=0)
+    moneyGlass = models.FloatField(default=0)
+    moneyPlastic = models.FloatField(default=0)
+    
+    
 
     def __str__(self):
         return f"{self.material} - {self.weight}kg - {self.volume}m³"
@@ -55,11 +64,13 @@ class RecyclingData(models.Model):
 class RecyclingCenter(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
-    url_maps = models.URLField(blank=False, null=False)
-    contact_info = models.CharField(max_length=100)
-    plastic_price_per_kg = models.FloatField(default=0.0)
-    glass_price_per_kg = models.FloatField(default=0.0)
-    cardboard_price_per_kg = models.FloatField(default=0.0)
+    url_maps = models.URLField(max_length=1000, blank=False, null=False)
+    contact_info = models.CharField(max_length=100, null=True, blank=True)
+    plastic_price_per_kg = models.FloatField(blank=False, null=False)
+    glass_price_per_kg = models.FloatField(blank=False, null=False)
+    cardboard_price_per_kg = models.FloatField(blank=False, null=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name

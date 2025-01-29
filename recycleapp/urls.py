@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import registerView, loginView, DashboardView, logoutApp, userProfile, RecycleView
+from .views import registerView, loginView, DashboardView, logoutApp, userProfile, RecycleView, deleteRecyclingData, editRecyclingData, RecycleCenterView
 
 
 app_name = 'recycleapp'
@@ -10,5 +10,9 @@ urlpatterns = [
     path('login/', loginView, name='login'),
     path('logout/', logoutApp, name='logout'),
     path('profile/<int:pk>/', userProfile, name='profile'),
-    path('card-board/', RecycleView.as_view(), name='card-board'),
+    path('recycle-view/', RecycleView.as_view(), name='recycle-view'),
+    path('delete-recycling-data/<int:pk>/', deleteRecyclingData, name='delete-recycling-data'),
+    path('edit-recycling-data/<int:pk>/', editRecyclingData, name='edit-recycling-data'),
+    path('recycle-center/', RecycleCenterView.as_view(), name="recycle-center" )
+
 ]

@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserChangeForm
-from django.utils.translation import activate
-from .models import Profile, RecyclingData
+
+from .models import Profile, RecyclingData, RecyclingCenter
 
 
 
@@ -69,7 +69,7 @@ class UpdateProfile(UserChangeForm):
     
 
 
-class CardBoardForm(forms.ModelForm):
+class RecyclingDataForm(forms.ModelForm):
     class Meta:
         model = RecyclingData
         fields = ['material', 'weight', 'volume', 'location', 'collector_name', 'notes']
@@ -85,4 +85,19 @@ class CardBoardForm(forms.ModelForm):
             'weight': _('Solo se aceptan pesos'),
             'notes': _('Puedes agregar notas por cada reciclaje que hagas'),
             'collector_name': _('Tu nombre o el de la persona que realizó la recolección')
+        }
+
+
+class RecyclingCenterForm(forms.ModelForm):
+    class Meta:
+        model = RecyclingCenter
+        fields = ['name', 'address', 'url_maps', 'contact_info', 'plastic_price_per_kg', 'glass_price_per_kg', 'cardboard_price_per_kg']
+        labels = {
+            'name': 'Nombre',
+            'address': 'Dirección',
+            'url_maps': 'Ubicación por Google Maps',
+            'contact_info': 'Número de contacto',
+            'plastic_price_per_kg': 'Precio del Plástico por KG',
+            'glass_price_per_kg':  'Precio del Vidrio por KG',
+            'cardboard_price_per_kg':  'Precio del Cartón por KG'
         }

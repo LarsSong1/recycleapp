@@ -4,7 +4,7 @@
 
 {% block appcontent %}
   <div class="p-4">
-    <h1 class="font-bold text-2xl">Perfil de {{ request.user.username }}</h1>
+    <h1 class="font-bold text-2xl">Perfil de {{ user.username }}</h1>
 
     <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {% comment %}Cajas Resumen Dashboard{% endcomment %}
@@ -81,10 +81,10 @@
                     <a href="#" class=" bg-orange-200 p-2 rounded-md">
                       <img class="w-4 h-4" src="{% static 'dolar.png' %}" alt="">
                     </a>
-                    <a href="#" class=" bg-green-200 p-2 rounded-md">
+                    <a href="{% url 'recycleapp:edit-recycling-data' data.id %}" class=" bg-green-200 p-2 rounded-md">
                       <img class="w-4 h-4" src="{% static 'lapiz.png' %}" alt="">
                     </a>
-                    <a href="#" class=" bg-red-200 p-2 rounded-md">
+                    <a href="{% url 'recycleapp:delete-recycling-data' data.id %}" class=" bg-red-200 p-2 rounded-md">
                       <img class="w-4 h-4" src="{% static 'borrar.png' %}" alt="">
                     </a>
                   </td>

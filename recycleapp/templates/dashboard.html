@@ -50,9 +50,15 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{% url 'recycleapp:card-board' %}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
+                  <a href="{% url 'recycleapp:recycle-view' %}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
                     <img class="w-7" src="{% static 'carton.png' %}" alt="" />
                     <span class="ml-3 flex-1 whitespace-nowrap">Reciclaje</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{% url 'recycleapp:recycle-center' %}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
+                    <img class="w-7" src="{% static 'centro.png' %}" alt="" />
+                    <span class="ml-3 flex-1 whitespace-nowrap">Centros de Reciclaje</span>
                   </a>
                 </li>
                 <li>
@@ -78,7 +84,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">2,340</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Plásticos Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -92,7 +98,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">5,355</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Cajas Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -106,7 +112,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">385</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Vidrios Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
@@ -149,61 +155,20 @@
                           <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                               <tr>
-                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction</th>
-                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reciclajes</th>
+                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ganancias</th>
                               </tr>
                             </thead>
                             <tbody class="bg-white">
                               <tr>
                                 <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from <span class="font-semibold">Bonnie Green</span>
+                                  Reciclaje de <span class="font-semibold">user idk</span>
                                 </td>
                                 <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 23 ,2021</td>
                                 <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$2300</td>
                               </tr>
-                              <tr class="bg-gray-50">
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment refund to <span class="font-semibold">#00910</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 23 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">-$670</td>
-                              </tr>
-                              <tr>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment failed from <span class="font-semibold">#087651</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 18 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$234</td>
-                              </tr>
-                              <tr class="bg-gray-50">
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment from <span class="font-semibold">Lana Byrd</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 15 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$5000</td>
-                              </tr>
-                              <tr>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from <span class="font-semibold">Jese Leos</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 15 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$2300</td>
-                              </tr>
-                              <tr class="bg-gray-50">
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment from <span class="font-semibold">THEMESBERG LLC</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 11 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$560</td>
-                              </tr>
-                              <tr>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from <span class="font-semibold">Lana Lysle</span>
-                                </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 6 ,2021</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$1437</td>
-                              </tr>
+                              
                             </tbody>
                           </table>
                         </div>
@@ -220,77 +185,25 @@
                   </div>
                   <div class="flow-root">
                     <ul role="list" class="divide-y divide-gray-200">
+                      {% for user in users %}
                       <li class="py-3 sm:py-4">
                         <div class="flex items-center space-x-4">
                           <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/bonnie-green.png" alt="Neil image" />
+                            <img class="rounded-full object-cover h-10 w-10" src="{{ user.profile.photo.url }}" alt="{{ user.username }}-profile" />
                           </div>
                           <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">Neil Sims</p>
+                            <p class="text-sm font-medium text-gray-900 truncate">{{user.username}}</p>
                             <p class="text-sm text-gray-500 truncate">
                               <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="17727a767e7b57607e7973646372653974787a">[email&#160;protected]</a>
                             </p>
                           </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900">$320</div>
+                          <a href="{% url 'recycleapp:profile' user.id %}" class="inline-flex cursor-pointer items-center text-base font-semibold text-gray-900">
+                            <p class="text-xs mr-2">Ver Perfil</p>
+                            <img class="w-4" src="{% static "ojo.png" %}" alt="">
+                          </a>
                         </div>
                       </li>
-                      <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                          <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/bonnie-green.png" alt="Neil image" />
-                          </div>
-                          <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">Bonnie Green</p>
-                            <p class="text-sm text-gray-500 truncate">
-                              <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d4b1b9b5bdb894a3bdbab0a7a0b1a6fab7bbb9">[email&#160;protected]</a>
-                            </p>
-                          </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900">$3467</div>
-                        </div>
-                      </li>
-                      <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                          <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/michael-gough.png" alt="Neil image" />
-                          </div>
-                          <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">Michael Gough</p>
-                            <p class="text-sm text-gray-500 truncate">
-                              <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="57323a363e3b17203e3933242332257934383a">[email&#160;protected]</a>
-                            </p>
-                          </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900">$67</div>
-                        </div>
-                      </li>
-                      <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-4">
-                          <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/thomas-lean.png" alt="Neil image" />
-                          </div>
-                          <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">Thomes Lean</p>
-                            <p class="text-sm text-gray-500 truncate">
-                              <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="284d45494144685f41464c5b5c4d5a064b4745">[email&#160;protected]</a>
-                            </p>
-                          </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900">$2367</div>
-                        </div>
-                      </li>
-                      <li class="pt-3 sm:pt-4 pb-0">
-                        <div class="flex items-center space-x-4">
-                          <div class="flex-shrink-0">
-                            <img class="h-8 w-8 rounded-full" src="https://demo.themesberg.com/windster/images/users/lana-byrd.png" alt="Neil image" />
-                          </div>
-                          <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-900 truncate">Lana Byrd</p>
-                            <p class="text-sm text-gray-500 truncate">
-                              <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a2c7cfc3cbcee2d5cbccc6d1d6c7d08cc1cdcf">[email&#160;protected]</a>
-                            </p>
-                          </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900">$367</div>
-                        </div>
-                      </li>
-                    </ul>
+                      {% endfor %}
                   </div>
                 </div>
                 {% comment %} <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
