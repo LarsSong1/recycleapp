@@ -21,6 +21,7 @@ class RecyclingData(models.Model):
     weight = models.FloatField()
     volume = models.FloatField()
     density = models.FloatField(blank=True, null=True)  # Densidad calculada (kg/m³)
+    recolected = models.FloatField(blank=True, null=True)
     date_collected = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=255)
     collector_name = models.CharField(max_length=100, blank=True, null=True)
@@ -31,6 +32,9 @@ class RecyclingData(models.Model):
     money_cardboard = models.FloatField(default=0)
     moneyGlass = models.FloatField(default=0)
     moneyPlastic = models.FloatField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
     
     
 
@@ -51,9 +55,19 @@ class RecyclingData(models.Model):
         """
         Calcula la densidad antes de guardar si hay peso y volumen válidos.
         """
-        if self.weight and self.volume:
+        # if self.weight and self.volume:
+        #     self.density = self.calculate_density()
+        # super().save(*args, **kwargs)
+
+        if self.claimed:
+            self.density = 0  # Si el material ya fue reclamado, la densidad se pone en 0.
+        elif self.weight and self.volume:
             self.density = self.calculate_density()
+            self.recolected = self.calculate_density()
+
         super().save(*args, **kwargs)
+        
+        
 
     
 

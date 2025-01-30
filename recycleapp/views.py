@@ -71,12 +71,30 @@ def logoutApp(request):
 class DashboardView(View):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
-        data = RecyclingData.objects.all()
+        data = RecyclingData.objects.filter(claimed=True)
+
+        moneyGlass = 0
+        moneyCardBoard = 0
+        moneyPlastic = 0
+        for usersData in data:
+            moneyGlass += usersData.moneyGlass
+            moneyCardBoard += usersData.money_cardboard
+            moneyPlastic += usersData.moneyPlastic
+
+
+        moneyPlastic = round(moneyPlastic, 2)
+        moneyGlass = round(moneyGlass, 2)
+        moneyCardBoard = round(moneyCardBoard, 2)      
+
         user_session = request.user
         context = {
             'users': users,
             'user_session': user_session,
-            'data': data
+            'data': data, 
+            'glass': moneyGlass,
+            'cardboard': moneyCardBoard,
+            'plastic': moneyPlastic,
+            'recolected': data
         }
         return render(request, 'dashboard.html', context)
 
@@ -105,6 +123,28 @@ def userProfile(request, pk):
     activate('es')
     user = get_object_or_404(User, pk=pk)
     myRecylcingData = RecyclingData.objects.filter(user=pk)
+
+    moneyCardBoard = 0
+    moneyPlastic = 0
+    moneyGlass = 0
+
+    for data in RecyclingData.objects.filter(user=pk, claimed=True):
+        moneyCardBoard += data.money_cardboard
+        moneyPlastic += data.moneyPlastic
+        moneyGlass += data.moneyGlass
+        
+
+    moneyCardBoard = round(moneyCardBoard, 2)
+    moneyCardBoard = round(moneyCardBoard, 2)
+    moneyGlass = round(moneyGlass, 2)
+
+
+
+    print(moneyGlass)
+    
+
+
+
     if request.method == 'POST':
         form = UpdateProfile(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
@@ -117,7 +157,11 @@ def userProfile(request, pk):
     context = {
         'user': user,
         'form': form,
-        'recyclingData': myRecylcingData
+        'recyclingData': myRecylcingData,
+        'cardboard': moneyCardBoard,
+        'plastic': moneyPlastic,
+        'glass': moneyGlass
+
         
     }
     return render(request, 'profile.html', context)
@@ -287,7 +331,7 @@ class addReciclingCenter(View):
 
 
 # Por Revisar
-@login_required
+
 def claimMaterial(request, center_id):
     """ Procesa el reclamo de múltiples materiales y actualiza las ganancias del usuario. """
     center = get_object_or_404(RecyclingCenter, id=center_id)
@@ -323,18 +367,27 @@ def claimMaterial(request, center_id):
                 print(f"Antes: moneyGlass = {material.moneyGlass}")
                 material.moneyGlass += material_price
                 print(f"Después: moneyGlass = {material.moneyGlass}")
+              
 
             elif material.material == "Cartón":
-                print(f"Antes: moneyCardboard = {material.moneyCardboard}")
-                material.moneyCardboard += material_price
-                print(f"Después: moneyCardboard = {material.moneyCardboard}")
+                print(f"Antes: moneyCardboard = {material.money_cardboard}")
+                material.money_cardboard += material_price
+                print(f"Después: moneyCardboard = {material.money_cardboard}")
+               
 
             # Marcar como reclamado
+          
             material.claimed = True
-            material.save()
+            material.density = 0
+            
+
+
+
+            material.save(update_fields=['moneyPlastic', 'moneyGlass', 'money_cardboard', 'claimed', 'density'])
 
         messages.success(request, f"¡Has reclamado los materiales! Ganaste ${total_money:.2f}.")
-        return redirect('recycleapp:profile', pk=request.user.pk)  # Redirige después de reclamar todos los materiales
+        if request.user.is_authenticated and request.user.pk:
+            return redirect('recycleapp:profile', pk=request.user.pk)  # Redirige después de reclamar todos los materiales
     else:
         # Redirige si no es un método POST
         return redirect('recycleapp:recycle-center')

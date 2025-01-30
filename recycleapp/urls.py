@@ -5,9 +5,9 @@ from .views import registerView, loginView, DashboardView, logoutApp, userProfil
 app_name = 'recycleapp'
 
 urlpatterns = [
-    path('', DashboardView.as_view(), name='dashboard'),
+    path('dashboard', DashboardView.as_view(), name='dashboard'),
     path('register-user/', registerView, name='register'),
-    path('login/', loginView, name='login'),
+    path('', loginView, name='login'),
     path('logout/', logoutApp, name='logout'),
     path('profile/<int:pk>/', userProfile, name='profile'),
     path('recycle-view/', RecycleView.as_view(), name='recycle-view'),

@@ -43,12 +43,14 @@
                   </a>
                 </li>
 
+      
                 <li>
                   <a href="{% url 'recycleapp:profile' request.user.id %}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
                     <img class="w-6" src="{% static 'perfil.png' %}" alt="" />
                     <span class="ml-3 flex-1 whitespace-nowrap">Perfil</span>
                   </a>
                 </li>
+                
                 <li>
                   <a href="{% url 'recycleapp:recycle-view' %}" class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group">
                     <img class="w-7" src="{% static 'carton.png' %}" alt="" />
@@ -84,7 +86,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{plastic}}</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Plásticos Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -98,7 +100,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{cardboard}}</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Cajas Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -112,7 +114,7 @@
                 <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
                   <div class="flex items-center">
                     <div class="flex-shrink-0">
-                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$0</span>
+                      <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{glass}}</span>
                       <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Vidrios Reciclados</h3>
                     </div>
                     <div class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
@@ -142,11 +144,11 @@
                   <div class="mb-4 flex items-center justify-between">
                     <div>
                       <h3 class="text-xl font-bold text-gray-900 mb-2">Datos de Reciclajes realizados</h3>
-                      <span class="text-base font-normal text-gray-500">Listado de recyclajes realizados por usuarios</span>
+                      <span class="text-base font-normal text-gray-500">Listado de reciclajes realizados por usuarios</span>
                     </div>
-                    <div class="flex-shrink-0">
+                    {% comment %} <div class="flex-shrink-0">
                       <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View all</a>
-                    </div>
+                    </div> {% endcomment %}
                   </div>
                   <div class="flex flex-col mt-8">
                     <div class="overflow-x-auto rounded-lg">
@@ -161,13 +163,15 @@
                               </tr>
                             </thead>
                             <tbody class="bg-white">
+                              {% for recycle in recolected  %}
                               <tr>
                                 <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Reciclaje de <span class="font-semibold">user idk</span>
+                                  Reciclaje de <span class="font-semibold">{{recycle.user.username}}</span>
                                 </td>
-                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">Apr 23 ,2021</td>
+                                <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">{{recycle.created}}</td>
                                 <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$2300</td>
                               </tr>
+                              {% endfor %}
                               
                             </tbody>
                           </table>
@@ -181,7 +185,7 @@
                 <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
                   <div class="flex items-center justify-between mb-4">
                     <h3 class="text-xl font-bold leading-none text-gray-900">Usuarios</h3>
-                    <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">View all</a>
+                    {% comment %} <a href="#" class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">View all</a> {% endcomment %}
                   </div>
                   <div class="flow-root">
                     <ul role="list" class="divide-y divide-gray-200">
@@ -193,14 +197,16 @@
                           </div>
                           <div class="flex-1 min-w-0">
                             <p class="text-sm font-medium text-gray-900 truncate">{{user.username}}</p>
-                            <p class="text-sm text-gray-500 truncate">
+                            {% comment %} <p class="text-sm text-gray-500 truncate">
                               <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="17727a767e7b57607e7973646372653974787a">[email&#160;protected]</a>
-                            </p>
+                            </p> {% endcomment %}
                           </div>
-                          <a href="{% url 'recycleapp:profile' user.id %}" class="inline-flex cursor-pointer items-center text-base font-semibold text-gray-900">
-                            <p class="text-xs mr-2">Ver Perfil</p>
-                            <img class="w-4" src="{% static "ojo.png" %}" alt="">
-                          </a>
+                          {% if request.user.is_superuser %}
+                            <a href="{% url 'recycleapp:profile' user.id %}" class="inline-flex cursor-pointer items-center text-base font-semibold text-gray-900">
+                              <p class="text-xs mr-2">Ver Perfil</p>
+                              <img class="w-4" src="{% static "ojo.png" %}" alt="">
+                            </a>
+                          {% endif %}
                         </div>
                       </li>
                       {% endfor %}

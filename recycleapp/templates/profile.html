@@ -11,7 +11,7 @@
       <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{plastic}}</span>
             <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Plásticos Reciclados</h3>
           </div>
           <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -25,7 +25,7 @@
       <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{cardboard}}</span>
             <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Cajas Reciclados</h3>
           </div>
           <div class="ml-5 w-0 flex items-center justify-end flex-1 text-green-500 text-base font-bold">
@@ -39,7 +39,7 @@
       <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ 0</span>
+            <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">$ {{glass}}</span>
             <h3 class="text-sm font-normal text-gray-500">Ganancias por Kg de Vidrios Reciclados</h3>
           </div>
           <div class="ml-5 w-0 flex items-center justify-end flex-1 text-red-500 text-base font-bold">
@@ -64,7 +64,8 @@
                 <th class="px-2.5 py-2 text-start font-medium">Nombre</th>
                 <th class="px-2.5 py-2 text-start font-medium">Material</th>
                 <th class="px-2.5 py-2 text-start font-medium">Kg recolectado</th>
-                <th class="px-2.5 py-2 text-start font-medium"></th>
+                <th class="px-2.5 py-2 text-start font-medium">Fecha</th>
+                <th class="px-2.5 py-2 text-start font-medium">Acciones</th>
               </tr>
             </thead>
             {% for data in recyclingData %}
@@ -76,17 +77,16 @@
                     <td class="p-3">{{ request.user.username }}</td>
                   {% endif %}
                   <td class="p-3">{{ data.material }}</td>
-                  <td class="p-3">{{ data.density }} kg</td>
+                  <td class="p-3">{{ data.recolected }} kg</td>
+                  <td class="p-3">{{data.created}}</td>
                   <td class="p-3 inline-flex gap-2">
-                    <a href="#" class=" bg-orange-200 p-2 rounded-md">
-                      <img class="w-4 h-4" src="{% static 'dolar.png' %}" alt="">
-                    </a>
-                    <a href="{% url 'recycleapp:edit-recycling-data' data.id %}" class=" bg-green-200 p-2 rounded-md">
-                      <img class="w-4 h-4" src="{% static 'lapiz.png' %}" alt="">
-                    </a>
-                    <a href="{% url 'recycleapp:delete-recycling-data' data.id %}" class=" bg-red-200 p-2 rounded-md">
-                      <img class="w-4 h-4" src="{% static 'borrar.png' %}" alt="">
-                    </a>
+                    {% if data.density > 0 %}
+                      <a href="{% url 'recycleapp:recycle-center' %}" class="bg-orange-200 p-2 rounded-md"><img class="w-4 h-4" src="{% static 'dolar.png' %}" alt="" /></a>
+                    {% else %}
+
+                    {% endif %}
+                    <a href="{% url 'recycleapp:edit-recycling-data' data.id %}" class="bg-green-200 p-2 rounded-md"><img class="w-4 h-4" src="{% static 'lapiz.png' %}" alt="" /></a>
+                    <a href="{% url 'recycleapp:delete-recycling-data' data.id %}" class="bg-red-200 p-2 rounded-md"><img class="w-4 h-4" src="{% static 'borrar.png' %}" alt="" /></a>
                   </td>
                 </tr>
               </tbody>

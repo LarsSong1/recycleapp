@@ -10,7 +10,7 @@
         <div class="shadow-lg p-4">
           <div class="flex justify-between">
             <h3 class="font-bold text-xl">{{ center_data.center.name }}</h3>
-            <a href="#" class="flex gap-2">
+            <a target="_blank" href="{{center_data.center.url_maps}}" class="flex gap-2">
               <p class="font-bold">Ver en Maps</p>
               <img class="w-6 h-6" src="{% static 'maps.png' %}" alt="" />
             </a>
@@ -69,7 +69,7 @@
                     {% endif %}
                   {% endfor %}
 
-                  <button type="submit" class="bg-blue-500 text-white px-4 py-2 mt-4 rounded">Reclamar</button>
+                  <button type="submit" class="bg-green-700 text-white px-4 py-2 mt-4 rounded">Reclamar</button>
                 {% else %}
                   <p>No tienes recolecciones</p>
                 {% endif %}
