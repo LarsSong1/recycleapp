@@ -169,7 +169,20 @@
                                   Reciclaje de <span class="font-semibold">{{recycle.user.username}}</span>
                                 </td>
                                 <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">{{recycle.created}}</td>
-                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">$2300</td>
+                                
+                                {% if recycle.money_cardboard > 0 %}
+                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                  {{recycle.money_cardboard}}
+                                </td>
+                                {% elif recycle.moneyGlass > 0 %}
+                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                  {{recycle.moneyGlass}}
+                                </td>
+                                {% elif recycle.moneyPlastic > 0 %}
+                                <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                  {{recycle.moneyPlastic}}
+                                </td>
+                                {% endif %}
                               </tr>
                               {% endfor %}
                               

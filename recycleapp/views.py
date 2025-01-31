@@ -84,7 +84,10 @@ class DashboardView(View):
 
         moneyPlastic = round(moneyPlastic, 2)
         moneyGlass = round(moneyGlass, 2)
-        moneyCardBoard = round(moneyCardBoard, 2)      
+        moneyCardBoard = round(moneyCardBoard, 2)   
+         
+ 
+
 
         user_session = request.user
         context = {
@@ -94,7 +97,9 @@ class DashboardView(View):
             'glass': moneyGlass,
             'cardboard': moneyCardBoard,
             'plastic': moneyPlastic,
-            'recolected': data
+            'recolected': data,
+           
+            
         }
         return render(request, 'dashboard.html', context)
 
