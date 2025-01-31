@@ -72,7 +72,7 @@ class DashboardView(View):
     def get(self, request, *args, **kwargs):
         users = User.objects.all()
         data = RecyclingData.objects.filter(claimed=True)
-
+        datauser = RecyclingData.objects.filter(claimed=True, user=request.user)
         moneyGlass = 0
         moneyCardBoard = 0
         moneyPlastic = 0
@@ -80,6 +80,15 @@ class DashboardView(View):
             moneyGlass += usersData.moneyGlass
             moneyCardBoard += usersData.money_cardboard
             moneyPlastic += usersData.moneyPlastic
+
+        cardboardRegister = sum(1 for d in data if d.material == 'Cartón')
+        glassRegister = sum(1 for d in data if d.material == 'Vidrio')
+        plasticRegister = sum(1 for d in data if d.material == 'Plástico')
+
+
+        cardboardRegisterUser = sum(1 for d in datauser if d.material == 'Cartón')
+        glassRegisterUser = sum(1 for d in datauser if d.material == 'Vidrio')
+        plasticRegisterUser = sum(1 for d in datauser if d.material == 'Plástico')
 
 
         moneyPlastic = round(moneyPlastic, 2)
@@ -98,6 +107,13 @@ class DashboardView(View):
             'cardboard': moneyCardBoard,
             'plastic': moneyPlastic,
             'recolected': data,
+            'plasticCount': plasticRegister,
+            'glassCount': glassRegister,
+            'cardboardCount': cardboardRegister,
+            'plasticCountUser': plasticRegisterUser,
+            'glassCountUser': glassRegisterUser,
+            'cardboardCountUser': cardboardRegisterUser,
+            'user_photo': request.user.profile.photo.url if request.user.profile.photo else None
            
             
         }
@@ -165,7 +181,8 @@ def userProfile(request, pk):
         'recyclingData': myRecylcingData,
         'cardboard': moneyCardBoard,
         'plastic': moneyPlastic,
-        'glass': moneyGlass
+        'glass': moneyGlass,
+        'user_photo': request.user.profile.photo.url if request.user.profile.photo else None
 
         
     }
@@ -197,8 +214,10 @@ class RecycleView(View):
         # Manejo del formulario para guardar datos
         recyclingDataForm = RecyclingDataForm(request.POST)
         if recyclingDataForm.is_valid():
-            recyclingDataForm.save()
-            return redirect('recycleapp:profile', pk=request.user.id)  # Cambia esto por tu URL correspondiente
+            recycling_data = recyclingDataForm.save(commit=False)
+            recycling_data.user = request.user
+            recycling_data.save()
+            return redirect('recycleapp:profile', pk=request.user.pk)  # Cambia esto por tu URL correspondiente
 
         # Si hay errores en el formulario, vuelve a renderizar la página con errores
         recyclingDataList = RecyclingData.objects.all()
@@ -207,6 +226,9 @@ class RecycleView(View):
             'data': recyclingDataList,
         }
         return render(request, 'recyclePage.html', context)
+
+
+
 
 
 
@@ -328,7 +350,7 @@ class addReciclingCenter(View):
         context = {
             'form': RecyclingCenter,
         }
-        return render(request, 'addRecyclePage.html', context)
+        return render(request, 'addRecycleCenter.html', context)
     
 
 

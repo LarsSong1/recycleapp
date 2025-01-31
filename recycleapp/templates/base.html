@@ -1,22 +1,38 @@
-
 {% load static tailwind_tags %}
-
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        {% block metatag %}
-        
-        {% endblock metatag %}
+      {% block metatag %}
+
+      {% endblock %}
     </title>
     {% tailwind_css %}
-</head>
-<body>
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <style>
+      body {
+        font-family: 'IBM Plex Mono', sans-serif;
+      }
+      [x-cloak] {
+        display: none;
+      }
+      .line {
+        background: repeating-linear-gradient(to bottom, #eee, #eee 1px, #fff 1px, #fff 8%);
+      }
+      .tick {
+        background: repeating-linear-gradient(to right, #eee, #eee 1px, #fff 1px, #fff 5%);
+      }
+    </style>
+  </head>
+  <body>
     {% block content %}
+
+    {% endblock %}
+
     
-    {% endblock content %}
-</body>
+  </body>
 </html>
