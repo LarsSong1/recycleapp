@@ -10,7 +10,6 @@ from .models import Profile, RecyclingData, RecyclingCenter
 
 
 class CreateUser(UserCreationForm):
-
     def __init__(self, *args, **kwargs):
         super(CreateUser, self).__init__(*args, **kwargs)
         self.fields['username'].label = 'Nombre de usuario'

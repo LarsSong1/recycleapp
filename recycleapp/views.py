@@ -29,7 +29,7 @@ def registerView(request):
             return redirect('recycleapp:login')
     else: 
         form = CreateUser()
-    return render(request, 'registerPage.html', {'form': form})
+    return render(request, 'registerPage.html', {'formulario': form})
 
 # Inicio de Sesion de usuarios
 def loginView(request):
@@ -81,6 +81,17 @@ class DashboardView(View):
             moneyCardBoard += usersData.money_cardboard
             moneyPlastic += usersData.moneyPlastic
 
+
+        moneyGlassUser = 0
+        moneyCardBoardUser = 0
+        moneyPlasticUser = 0
+        for usersData in datauser:
+            moneyGlassUser += usersData.moneyGlass
+            moneyCardBoardUser += usersData.money_cardboard
+            moneyPlasticUser += usersData.moneyPlastic
+
+
+
         cardboardRegister = sum(1 for d in data if d.material == 'Cartón')
         glassRegister = sum(1 for d in data if d.material == 'Vidrio')
         plasticRegister = sum(1 for d in data if d.material == 'Plástico')
@@ -106,6 +117,10 @@ class DashboardView(View):
             'glass': moneyGlass,
             'cardboard': moneyCardBoard,
             'plastic': moneyPlastic,
+            'glassUser': moneyGlassUser,
+            'cardBoardUser': moneyCardBoardUser,
+            'plasticUser': moneyPlasticUser,
+
             'recolected': data,
             'plasticCount': plasticRegister,
             'glassCount': glassRegister,
