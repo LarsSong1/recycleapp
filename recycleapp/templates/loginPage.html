@@ -7,13 +7,16 @@
 
 
 {% block content %}
-  <section class="w-full mx-auto flex justify-center h-screen overflow-hidden relative bg-gradient-to-tr from-green-50 via-green-100 to-green-700">
-    <div class="flex flex-col items-center justify-center">
-      <img class="mb-4 w-44" src="{% static 'logo.svg' %}" alt="">
-      <h2 class="mb-5 text-gray-900 font-mono font-bold text-4xl">Inicia Sesión</h2>
-      <span class="mb-2 text-gray-900 text-center">Sistema de Gestión de residuos<hr />Domesticos</span>
+  <section class="w-full mx-auto grid lg:grid-cols-2 grid-cols-1 h-screen overflow-hidden relative bg-gradient-to-tr from-green-50 via-green-100 to-green-700 ">
+  
+    <div class="flex flex-col items-center justify-center z-10">
 
-      <form class="min-w-[280px] lg:min-w-[400px] z-20" method="post" enctype="multipart/form-data">
+        <img class="relative w-full h-10" src="{% static 'logo.svg' %}" alt="">
+   
+      <h2 class="mb-5 text-black font-mono font-bold text-4xl">Inicia Sesión</h2>
+      <span class="mb-2 text-black text-center">Sistema de Gestión de residuos<hr />Domesticos</span>
+
+      <form class="min-w-[280px] lg:min-w-[400px] z-20 text-white" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <button class="bg-white border-4 border-black text-black hover:bg-black hover:text-white text-base rounded-lg py-2.5 px-5 transition-colors w-full text-[19px]">Entrar</button>
@@ -21,13 +24,16 @@
       <div class="z-20">
         <p class="text-center mt-3 text-[14px]">
           No tienes una cuenta aun?
-          <a href="{% url 'recycleapp:register' %}" class="text-gray-600">Crea una Ahora!</a>
+          <a href="{% url 'recycleapp:register' %}" class="text-gray-500">Crea una Ahora!</a>
         </p>
         <p class="text-center mt-3 p-2 text-[14px]">
           Esta es una aplicación desarrollado por
-          <a href="#" class="text-gray-600">Bryan Piedra y Cristhian Santos</a>
+          <a href="#" class="text-gray-500">Bryan Piedra y Cristhian Santos</a>
         </p>
       </div>
+    </div>
+    <div class="h-screen">
+      <img class="relative h-full object-cover" src="{% static 'img/plant.webp' %}" alt="">
     </div>
   </section>
 {% endblock %}
