@@ -7,10 +7,20 @@
 
   
 
-    <form method="POST">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <button type="submit" class="w-full bg-black text-white p-4 rounded-md">Enviar</button>
-    </form>
+    <div class="max-w-lg ">
+      <form class="flex flex-col justify-center items-center" method="POST">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {% for field in form %}
+            <div class="{% if forloop.counter|divisibleby:2 %}md:col-span-2{% endif %}">
+              {{ field|as_crispy_field }}
+            </div>
+          {% endfor %}
+        </div>
+      
+        <button type="submit" class="lg:w-40 w-full bg-black text-white p-4 rounded-md">Enviar</button>
+      </form>
+    </div>
   </div>
 {% endblock %}

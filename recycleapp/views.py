@@ -102,9 +102,14 @@ class DashboardView(View):
         plasticRegisterUser = sum(1 for d in datauser if d.material == 'Plástico')
 
 
+
         moneyPlastic = round(moneyPlastic, 2)
         moneyGlass = round(moneyGlass, 2)
         moneyCardBoard = round(moneyCardBoard, 2)   
+
+        moneyGlassUser = round(moneyGlassUser, 2)
+        moneyCardBoardUser = round(moneyCardBoardUser, 2)
+        moneyPlasticUser = round(moneyPlasticUser, 2)
          
  
 

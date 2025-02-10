@@ -10,9 +10,9 @@
       <a class="bg-green-700 flex justify-center items-center p-2 rounded-md text-white" href="{% url 'recycleapp:add-center' %}">Agregar Centro</a>
       {% endif %}
     </div>
-    <div>
+    <div class="grid lg:grid-cols-2 grid-cols-1">
       {% for center_data in recycling_results %}
-        <div class="shadow-lg p-4">
+      <div class="lg:col-span-2 col-span-2 w-2/4 shadow-lg p-4">
           <div class="flex justify-between">
             <h3 class="font-bold text-xl">{{ center_data.center.name }}</h3>
             <a target="_blank" href="{{center_data.center.url_maps}}" class="flex gap-2">
@@ -74,7 +74,10 @@
                     {% endif %}
                   {% endfor %}
 
-                  <button type="submit" class="bg-green-700 text-white px-4 py-2 mt-4 rounded">Reclamar</button>
+                  <button type="submit" class="bg-green-700 text-white px-4 flex justify-center items-center py-2 mt-4 gap-8 rounded-md">
+                    <p class="text-white">Reclamar</p>
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M14.8 8a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 6v10" /></svg>
+                  </button>
                 {% else %}
                   <p>No tienes recolecciones</p>
                 {% endif %}
@@ -82,7 +85,7 @@
             </form>
           </div>
         </div>
-      {% endfor %}
+          {% endfor %}
     </div>
   </div>
 {% endblock %}

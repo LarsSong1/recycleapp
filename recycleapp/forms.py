@@ -71,18 +71,20 @@ class UpdateProfile(UserChangeForm):
 class RecyclingDataForm(forms.ModelForm):
     class Meta:
         model = RecyclingData
-        fields = ['material', 'weight', 'volume', 'location', 'collector_name', 'notes']
+        fields = ['material', 'weight', 'collector_name', 'city', 'province', 'sector', 'notes']
         labels = {
             'material': 'Material',
-            'weight': 'Peso',
-            'volume': 'Volumen',
-            'location': 'Ubicación',
+            'weight': 'Peso [KG]',
+            # 'volume': 'Volumen',
             'collector_name': 'Nombre del recolector',
-            'notes': 'Notas'
+            'notes': 'Observaciones',
+            'city': 'Ciudad',
+            'province': 'Provincia',
+            'sector': 'Sector'
         }
         help_texts = {
-            'weight': _('Solo se aceptan pesos'),
-            'notes': _('Puedes agregar notas por cada reciclaje que hagas'),
+            'weight': _('Proporcionar pesos en Kg del producto recolectado'),
+            'notes': _('Puedes agregar observaciones por cada reciclaje que hagas'),
             'collector_name': _('Tu nombre o el de la persona que realizó la recolección')
         }
 
