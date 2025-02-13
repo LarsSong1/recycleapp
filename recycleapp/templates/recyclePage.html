@@ -3,18 +3,24 @@
 
 {% block appcontent %}
   <div class="p-4">
-    <h1 class="font-bold text-2xl">Reciclaje</h1>
+    <h1 class="font-bold text-2xl flex gap-4 items-center">
+      Reciclaje
+      <svg  xmlns="http://www.w3.org/2000/svg"  class="w-8 h-8"  viewBox="0 0 24 24"  fill="none"  stroke="green"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-recycle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17l-2 2l2 2" /><path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1" /><path d="M8.536 11l-.732 -2.732l-2.732 .732" /><path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024" /><path d="M15.464 11l2.732 .732l.732 -2.732" /><path d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976" /></svg>
+    </h1>
 
   
 
-    <div class="max-w-lg ">
-      <form class="flex flex-col justify-center items-center" method="POST">
+    <div class="max-w-lg">
+      <form class="flex flex-col justify-center items-start" method="POST">
         {% csrf_token %}
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4">
           {% for field in form %}
-            <div class="{% if forloop.counter|divisibleby:2 %}md:col-span-2{% endif %}">
-              {{ field|as_crispy_field }}
+            <div class="col-span-2">
+              
+           
+                {{ field|as_crispy_field }}
+           
             </div>
           {% endfor %}
         </div>

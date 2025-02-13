@@ -4,9 +4,10 @@ from django.utils.timezone import now
 
 
 class MaterialChoices(models.TextChoices):
-    PLASTIC = 'Plástico', 'Plástico'
-    GLASS = 'Vidrio', 'Vidrio'
     CARDBOARD = 'Cartón', 'Cartón'
+    GLASS = 'Vidrio', 'Vidrio'
+    PLASTIC = 'Plástico', 'Plástico'
+
 
 class ProvinceChoices(models.TextChoices):
     AZUAY = 'Azuay', 'Azuay'
@@ -36,42 +37,41 @@ class ProvinceChoices(models.TextChoices):
 
 
 class CityChoices(models.TextChoices):
-    # Ciudades principales por provincia
-    MILAGRO = 'Milagro', 'Milagro'
-    CUENCA = 'Cuenca', 'Cuenca'  # Azuay
-    GUARANDA = 'Guaranda', 'Guaranda'  # Bolívar
+    AMBATO = 'Ambato', 'Ambato'  # Tungurahua
     AZOGUES = 'Azogues', 'Azogues'  # Cañar
-    TULCAN = 'Tulcán', 'Tulcán'  # Carchi
-    RIOBAMBA = 'Riobamba', 'Riobamba'  # Chimborazo
-    LATACUNGA = 'Latacunga', 'Latacunga'  # Cotopaxi
-    MACHALA = 'Machala', 'Machala'  # El Oro
+    BABAHOYO = 'Babahoyo', 'Babahoyo'  # Los Ríos
+    CUENCA = 'Cuenca', 'Cuenca'  # Azuay
     ESMERALDAS = 'Esmeraldas', 'Esmeraldas'  # Esmeraldas
-    PUERTO_BAQUERIZO = 'Puerto Baquerizo Moreno', 'Puerto Baquerizo Moreno'  # Galápagos
+    GUARANDA = 'Guaranda', 'Guaranda'  # Bolívar
     GUAYAQUIL = 'Guayaquil', 'Guayaquil'  # Guayas
     IBARRA = 'Ibarra', 'Ibarra'  # Imbabura
+    LATACUNGA = 'Latacunga', 'Latacunga'  # Cotopaxi
     LOJA = 'Loja', 'Loja'  # Loja
-    BABAHOYO = 'Babahoyo', 'Babahoyo'  # Los Ríos
-    PORTOVIEJO = 'Portoviejo', 'Portoviejo'  # Manabí
     MACAS = 'Macas', 'Macas'  # Morona Santiago
-    TENA = 'Tena', 'Tena'  # Napo
+    MACHALA = 'Machala', 'Machala'  # El Oro
+    MILAGRO = 'Milagro', 'Milagro'  # Guayas
+    NUEVA_LOJA = 'Nueva Loja', 'Nueva Loja'  # Sucumbíos
+    PORTOVIEJO = 'Portoviejo', 'Portoviejo'  # Manabí
+    PUERTO_BAQUERIZO = 'Puerto Baquerizo Moreno', 'Puerto Baquerizo Moreno'  # Galápagos
     PUERTO_FRANCISCO = 'Puerto Francisco de Orellana', 'Puerto Francisco de Orellana'  # Orellana
     PUYO = 'Puyo', 'Puyo'  # Pastaza
     QUITO = 'Quito', 'Quito'  # Pichincha
+    RIOBAMBA = 'Riobamba', 'Riobamba'  # Chimborazo
     SANTA_ELENA = 'Santa Elena', 'Santa Elena'  # Santa Elena
     SANTO_DOMINGO = 'Santo Domingo', 'Santo Domingo'  # Santo Domingo de los Tsáchilas
-    NUEVA_LOJA = 'Nueva Loja', 'Nueva Loja'  # Sucumbíos
-    AMBATO = 'Ambato', 'Ambato'  # Tungurahua
+    TENA = 'Tena', 'Tena'  # Napo
+    TULCAN = 'Tulcán', 'Tulcán'  # Carchi
     ZAMORA = 'Zamora', 'Zamora'  # Zamora Chinchipe
 
 
 class SectorChoices(models.TextChoices):
-    URBANO = 'Urbano', 'Urbano'
-    RURAL = 'Rural', 'Rural'
-    NORTE = 'Norte', 'Norte'
-    SUR = 'Sur', 'Sur'
     CENTRO = 'Centro', 'Centro'
     ESTE = 'Este', 'Este'
+    NORTE = 'Norte', 'Norte'
     OESTE = 'Oeste', 'Oeste'
+    RURAL = 'Rural', 'Rural'
+    SUR = 'Sur', 'Sur'
+    URBANO = 'Urbano', 'Urbano'
 
 
 class Profile(models.Model):
@@ -148,7 +148,7 @@ class RecyclingCenter(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     url_maps = models.URLField(max_length=1000, blank=False, null=False)
-    contact_info = models.CharField(max_length=100, null=True, blank=True)
+    contact_info = models.CharField(max_length=10, null=True, blank=True)
     plastic_price_per_kg = models.FloatField(blank=False, null=False)
     glass_price_per_kg = models.FloatField(blank=False, null=False)
     cardboard_price_per_kg = models.FloatField(blank=False, null=False)

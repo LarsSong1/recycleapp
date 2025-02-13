@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserChangeForm
 
-from .models import Profile, RecyclingData, RecyclingCenter
+
+from .models import Profile, RecyclingData, RecyclingCenter, MaterialChoices, ProvinceChoices, CityChoices, SectorChoices
 
 
 
@@ -69,9 +70,33 @@ class UpdateProfile(UserChangeForm):
 
 
 class RecyclingDataForm(forms.ModelForm):
+    material = forms.ChoiceField(
+        choices=[("", "Seleccionar")] + list(MaterialChoices.choices),
+        required=True,
+        label="Material"
+    )
+    province = forms.ChoiceField(
+        choices=[("", "Seleccionar Provincia")] + list(ProvinceChoices.choices),
+        required=True,
+        label='Provincia'
+    )
+
+    city = forms.ChoiceField(
+        choices=[("", "Seleccionar Ciudad")] + list(CityChoices.choices),
+        required=True,
+        label='Ciudad'
+    )
+
+    sector = forms.ChoiceField(
+        choices=[("", "Seleccionar Sector")] + list(SectorChoices.choices),
+        required=True,
+        label='Provincia'
+    )
+
+
     class Meta:
         model = RecyclingData
-        fields = ['material', 'weight', 'collector_name', 'city', 'province', 'sector', 'notes']
+        fields = ['material', 'weight', 'collector_name', 'province','city', 'sector', 'notes'] 
         labels = {
             'material': 'Material',
             'weight': 'Peso [KG]',
@@ -87,6 +112,15 @@ class RecyclingDataForm(forms.ModelForm):
             'notes': _('Puedes agregar observaciones por cada reciclaje que hagas'),
             'collector_name': _('Tu nombre o el de la persona que realizó la recolección')
         }
+
+    
+    def __init__(self, *args, **kwargs):
+        super(RecyclingDataForm, self).__init__(*args, **kwargs)
+
+        self.fields['notes'].widget.attrs.update({
+            'style': 'resize: none'
+        })
+
 
 
 class RecyclingCenterForm(forms.ModelForm):
